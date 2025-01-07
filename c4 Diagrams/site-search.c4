@@ -19,14 +19,14 @@ model {
       }
     }
     //Components that make up the NHS Website
-    service azureSearch 'Azure Search' {
+    service azureSearch 'Azure AI Search - Site Search' {
       description '
        Azure Site Search Index
       '
       icon azure:cognitive-search
     }
 
-    service azureServiceBus 'Azure Service Bus' {
+    service azureServiceBus 'Azure Service Bus - Site Search' {
       description 'Azure Service Bus for all incoming search messages'
       style {
         icon azure:azure-service-bus
@@ -34,7 +34,7 @@ model {
       }
     }
 
-    service azureDataFactory 'Data Factory' {
+    service azureDataFactory 'Data Factory - Site Search' {
 
       style {
         icon azure:data-factories
@@ -42,7 +42,7 @@ model {
 
     }
 
-    azureContentDB = component 'Content Database' {
+    azureContentDB = component 'Content Database - Site Search' {
       description 'Copy of content ready to index'
       style {
         shape storage
@@ -52,7 +52,7 @@ model {
 
    
 
-    azureAnalyticsDB = component 'Analytics Database' {
+    azureAnalyticsDB = component 'Analytics Database - Site Search' {
       description 'Store of search results and model results'
 
       style {
@@ -70,7 +70,7 @@ model {
       }
     }
 
-    restapi function 'Messaging Functions' {
+    restapi function 'Messaging Functions - Site Search' {
       description 'Processes messages from service bus'
       style {
         icon azure:function-apps
