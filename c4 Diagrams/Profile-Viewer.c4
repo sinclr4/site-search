@@ -22,7 +22,7 @@ model {
 
   //Implementation
 
-  NHSWebsite.azureProfilesDB -> NHSWebsite.azureAISearch 'Profiles information loaded into Azure Search Index'
+
    NHSWebsite.profile-viewer-ui -> NHSWebsite.azureAISearch
  
 
