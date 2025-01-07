@@ -1,0 +1,102 @@
+
+
+model {
+   
+    profile-editor = actor 'Profile Editor' {
+    description 'An editor for a profile on the NHS Website'
+    style {
+      shape person
+    }
+
+  }
+  extend NHSWebsite  {
+
+
+    component profile-editor-ui 'Frontend for Profile Editing' {
+      description '.Net Core application, hosted as App Service Plan'
+      style {
+        shape browser
+      }
+    }
+   
+
+    service azureDataFactoryProfiles 'Data Factory for Profiles' {
+
+      style {
+        icon azure:data-factories
+      }
+
+    }
+        service azureServiceBusUEC 'Azure Service Bus - UEC' {
+      description 'Azure Service Bus for messages to UEC'
+      style {
+        icon azure:azure-service-bus
+        shape queue
+      }
+    }
+    restapi ProfileEditor-API 'API to capture edits for profiles' {
+      description 'All edits from Profile Manager'
+      style {
+        icon azure:function-apps
+      }
+    }
+   component editor-authentication 'Authentication mechanism for Profile Editor' {
+      description 'All editors must login using NHS Mail'
+      style {
+        icon azure:azure-ad-b2c
+      }
+    }
+
+
+  
+  }
+
+  // Customer uses the UI
+  profile-editor -> profile-editor-ui 'opens in browser'
+  //profile-editor -> NHSWebsite 'Owns an organisation profile'
+
+  //Implementation
+NHSWebsite.profile-editor-ui -> editor-authentication 'Authenticates a user'
+NHSWebsite.ProfileEditor-API -> editor-authentication 'Authenticates a user'
+NHSWebsite.ProfileEditor-API -> azureServiceBusUEC 'Post message to UEC'
+  NHSWebsite.azureProfilesDB -> NHSWebsite.azureAISearch 'Profiles information loaded into Azure Search Index'
+  azureDataFactoryProfiles -> NHSWebsite.azureProfilesDB 'Extracts Profiles from NHSUKChoice and PIMS'
+  NHSWebsite.profile-editor-ui -> NHSWebsite.ProfileEditor-API 'Accepts updates to a profile'
+ NHSWebsite.ProfileEditor-API -> NHSWebsite.azureProfilesDB 'Direct updates to the Database'
+ NHSWebsite.ProfileEditor-API -> NHSWebsite.azureAISearch 'Direct updates to the Search index'
+
+}
+
+deployment {
+
+  environment prod 'Production' {
+    eu = zone 'UK South' {
+      zone UKSouth {
+        instanceOf NHSWebsite.azureDataFactoryProfiles
+        instanceOf NHSWebsite.ProfileEditor-API
+        instanceOf NHSWebsite.editor-authentication
+        instanceOf NHSWebsite.azureServiceBusUEC
+   
+       
+      }
+    }
+  }
+}
+
+views {
+  view of profile-editor-ui {
+    title 'Implementation of Profile Editor'
+    description 'Technical overview'
+  
+    include *,
+    NHSWebsite.profile-editor-ui
+ 
+
+
+    style profile-editor {
+      color muted
+    }
+    autoLayout LeftRight
+  }
+
+}
