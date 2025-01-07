@@ -23,7 +23,7 @@ model {
   //Implementation
 
 
-   NHSWebsite.profile-viewer-ui -> NHSWebsite.azureAISearch
+   NHSWebsite.profile-viewer-ui -> NHSWebsite.azureAISearch 'Search for Profiles'
  
 
 }
