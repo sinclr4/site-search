@@ -57,17 +57,5 @@ views {
     }
     autoLayout LeftRight
   }
-   deployment view find-a-service {
-    title 'Production Deployment of Find a Service'
-    description 'Deployment of NHS.UK Find a Service'
 
-    include
-      *,
-      prod.uk.find-a-service.**
-
-    style uk._ {
-      color blue
-    }
-   
-	}
 }

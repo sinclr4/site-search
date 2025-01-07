@@ -17,7 +17,7 @@ deployment {
   }
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
+  uk = zone 'UK South' {
       zone UKSouth {
       instanceOf NHSWebsite.azureAISearch
       instanceOf NHSWebsite.azureCMSContentDB
@@ -36,7 +36,7 @@ views {
       *,
       prod.**
 
-    style eu._ {
+    style uk._ {
       color blue
     }
    

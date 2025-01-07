@@ -92,17 +92,5 @@ views {
     }
     autoLayout LeftRight
   }
-   deployment view wagtail {
-    title 'Production Deployment of Wagtail'
-    description 'Deployment of NHS.UK CMS'
 
-    include
-      *,
-      prod.uk.wagtail-cms.**
-
-    style uk._ {
-      color blue
-    }
-   
-	}
 }
