@@ -12,6 +12,7 @@ specification {
 model {
  
  NHSWebsite = system 'NHS Website' {
+  description 'The primary source of health information in England'
 
  service azureAISearch 'Azure Search' {
       description 'Azure Search Index of NHS Services and Postcodes'
