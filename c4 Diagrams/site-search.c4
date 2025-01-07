@@ -1,23 +1,7 @@
-specification {
-  element actor
-  element system
-  element component
-  element database
-  element queue
-  element restapi
-  element cloud
-  element service
 
-}
 
 model {
-  citizen = actor 'Citizen' {
-    description 'A visitor to the NHS Website'
-    style {
-      shape person
-    }
-
-  }
+  
   analyticsUser = actor 'Analytics/Content User' {
 
     description 'Specialist user of search solution'
@@ -26,9 +10,9 @@ model {
       shape person
     }
   }
-
-  NHSWebsite = system 'NHS Website' {
-    component ui 'Frontend for Site Search' {
+  extend NHSWebsite  {
+ 
+    component site-search-ui 'Frontend for Site Search' {
       description '.Net Core application, hosted as App Service Plan'
       style {
         shape browser
@@ -37,13 +21,13 @@ model {
     //Components that make up the NHS Website
     service azureSearch 'Azure Search' {
       description '
-       Azure Search Index
+       Azure Site Search Index
       '
       icon azure:cognitive-search
     }
 
     service azureServiceBus 'Azure Service Bus' {
-      description 'Azure Service Bus for all incoming messages'
+      description 'Azure Service Bus for all incoming search messages'
       style {
         icon azure:azure-service-bus
         shape queue
@@ -66,13 +50,7 @@ model {
       }
     }
 
-    azureCMSContentDB = component 'Wagtail Content Database' {
-      description 'Database user to run the CMS'
-      style {
-        shape storage
-        icon azure:azure-database-postgre-sql-server
-      }
-    }
+   
 
     azureAnalyticsDB = component 'Analytics Database' {
       description 'Store of search results and model results'
@@ -83,7 +61,7 @@ model {
       }
     }
 
-    restapi api 'Search APIs' {
+    component api 'Search APIs' {
       description '
         Implements business logic and exposes as REST API
         Implements type ahead for search box'
@@ -92,7 +70,7 @@ model {
       }
     }
 
-    component function 'Messaging Functions' {
+    restapi function 'Messaging Functions' {
       description 'Processes messages from service bus'
       style {
         icon azure:function-apps
@@ -101,38 +79,53 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> ui 'opens in browser'
+  citizen -> site-search-ui 'opens in browser'
   citizen -> NHSWebsite 'searches for health information'
   analyticsUser -> NHSWebsite 'Updates search solution'
 
   //Implementation
-  ui -> api 'fetches via HTTPS'
+  site-search-ui -> api 'fetches via HTTPS'
   api -> azureSearch 'fetches via HTTPS'
   api -> azureServiceBus 'Puts messages'
   azureServiceBus -> function 'Processes Messages'
   function -> azureAnalyticsDB 'Stores Analytics'
   azureDataFactory -> azureContentDB 'Extracts Content from Content DB'
   azureContentDB -> azureSearch 'Indexes Data'
-  azureCMSContentDB -> azureDataFactory 'Source of content'
+  NHSWebsite.azureCMSContentDB -> azureDataFactory 'Source of content'
   api -> azureAnalyticsDB 'Retrieves model responses'
 }
 
-views {
-  view index {
-    title 'Starting View'
-    description 'NHS.UK Site Search'
+deployment {
 
-    include *
-    autoLayout LeftRight
+  environment prod 'Production' {
+    eu = zone 'UK South' {
+      zone UKSouth {
+        instanceOf NHSWebsite.site-search-ui
+        instanceOf NHSWebsite.api
+        instanceOf NHSWebsite.azureAnalyticsDB
+        instanceOf NHSWebsite.azureSearch
+        instanceOf NHSWebsite.azureDataFactory
+        instanceOf NHSWebsite.function
+        instanceOf NHSWebsite.azureServiceBus
+        instanceOf NHSWebsite.azureContentDB
+      }
+    }
   }
-  view of NHSWebsite {
+}
+
+views {
+  view of site-search-ui {
     title 'Implementation of Site Search'
     description 'Technical overview'
+  
     include *
+ 
+
 
     style citizen {
       color muted
     }
     autoLayout LeftRight
   }
+
 }

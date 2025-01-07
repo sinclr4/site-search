@@ -1,0 +1,64 @@
+specification {
+  element actor
+  element system
+  element component
+  element database
+  element queue
+  element restapi
+  element cloud
+  element service
+
+}
+model {
+ 
+ NHSWebsite = system 'NHS Website' {
+
+ service azureAISearch 'Azure Search' {
+      description 'Azure Search Index of NHS Services and Postcodes'
+     icon azure:cognitive-search
+    }
+      
+       azureCMSContentDB = component 'Wagtail Content Database' {
+      description 'Database user to run the CMS'
+      style {
+        shape storage
+        icon azure:azure-database-postgre-sql-server
+      }
+    }
+
+
+ }
+   
+
+    citizen = actor 'Citizen' {
+    description 'A visitor to the NHS Website'
+    style {
+      shape person
+    }
+
+  }
+}
+views { 
+  view index {
+    title 'Index View for NHS Website'
+    description 'A model showing the NHS Website'
+
+    include *
+    
+    autoLayout LeftRight
+    style azureAISearch {
+      shape storage
+    }
+  }
+    view of NHSWebsite {
+    title 'Implementation of NHS Website'
+    description 'Technical overview of all components'
+    include *
+
+    style citizen {
+      color muted
+    }
+    autoLayout LeftRight
+  }
+
+}

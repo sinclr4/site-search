@@ -1,0 +1,87 @@
+specification {
+
+}
+
+model {
+ 
+ contentEditor = actor 'Content Editor' {
+
+    description 'Specialist user responsible for creation of content'
+
+    style {
+      shape person
+    }
+  }
+
+  extend NHSWebsite  {
+    component nhswebsite-ui 'Frontend for all Content' {
+      description 'Wagtail is a Python based CMS '
+      style {
+        shape browser
+      }
+      link https://wagtail.org/
+    }
+ component nhswebsite-admin-ui 'Frontend for all Content editing' {
+      description 'Wagtail is a Python based CMS '
+      style {
+        shape browser
+      }
+      link https://wagtail.org/
+    }
+  }
+
+  // Customer uses the UI
+  citizen -> nhswebsite-ui 'opens in browser'
+  contentEditor -> nhswebsite-admin-ui 'Editor for Content Management'
+ 
+
+
+  //Implementation
+nhswebsite-ui -> NHSWebsite.azureCMSContentDB 'Serves all NHS Content'
+nhswebsite-admin-ui -> NHSWebsite.azureCMSContentDB 'Serves all NHS Content'
+
+}
+
+// Deployment model
+deployment {
+
+
+
+  environment prod 'Production' {
+    eu = zone 'UK South' {
+      zone UKSouth {
+
+        instanceOf NHSWebsite.nhswebsite-ui
+        instanceOf NHSWebsite.nhswebsite-admin-ui
+      
+      }
+    }
+  }
+}
+
+
+views {
+
+  view of nhswebsite-ui {
+    title 'Implementation of NHS Content for citizens'
+    description 'Technical overview of CMS'
+    include *,
+    nhswebsite-ui
+
+    style citizen {
+      color muted
+    }
+    autoLayout LeftRight
+  }
+    view of nhswebsite-admin-ui {
+    title 'Implementation of NHS Content for editors'
+    description 'Technical overview of CMS'
+    include *,
+    nhswebsite-admin-ui
+
+    style citizen {
+      color muted
+    }
+    autoLayout LeftRight
+  }
+}

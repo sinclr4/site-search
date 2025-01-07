@@ -19,14 +19,8 @@ deployment {
   environment prod 'Production' {
     eu = zone 'UK South' {
       zone UKSouth {
-        instanceOf NHSWebsite.ui
-        instanceOf NHSWebsite.api
-        instanceOf NHSWebsite.azureAnalyticsDB
-        instanceOf NHSWebsite.azureSearch
-        instanceOf NHSWebsite.azureDataFactory
-        instanceOf NHSWebsite.function
-        instanceOf NHSWebsite.azureServiceBus
-        instanceOf NHSWebsite.azureContentDB
+      instanceOf NHSWebsite.azureAISearch
+      instanceOf NHSWebsite.azureCMSContentDB
       }
     }
   }
