@@ -16,6 +16,12 @@ deployment {
     instanceOf citizen
   }
 
+      node CMSEditorNode {
+    instanceOf contentEditor
+  }
+node profileEditorNode{
+  instanceOf profile-editor
+}
   environment prod 'Production' {
   uk = zone 'UK South' {
       zone UKSouth {

@@ -79,9 +79,9 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> site-search-ui 'opens in browser'
+  citizen -> site-search-ui 'User searching for information on the site'
   citizen -> NHSWebsite 'searches for health information'
-  analyticsUser -> NHSWebsite 'Updates search solution'
+  analyticsUser -> site-search-ui 'Updates search solution'
 
   //Implementation
   site-search-ui -> api 'fetches via HTTPS'
