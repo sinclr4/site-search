@@ -30,7 +30,7 @@ deployment {
 views {
   deployment view prod-deployment {
     title 'Production Deployment'
-    description 'Deployment of Site Search to UK South'
+    description 'Deployment of NHS.UK'
 
     include
       *,
