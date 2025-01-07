@@ -15,7 +15,12 @@ model {
 
  service azureAISearch 'Azure Search' {
       description 'Azure Search Index of NHS Services and Postcodes'
+     style {
+    
+     
      icon azure:cognitive-search
+      shape storage
+     }
     }
       
        azureCMSContentDB = component 'Wagtail Content Database' {
@@ -25,6 +30,14 @@ model {
         icon azure:azure-database-postgre-sql-server
       }
     }
+        azureProfilesDB = component 'Profiles Database' {
+      description 'Profiles Database'
+      style {
+        shape storage
+        icon azure:azure-sql
+      }
+    }
+
 
 
  }

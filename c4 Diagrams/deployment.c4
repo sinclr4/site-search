@@ -21,6 +21,7 @@ deployment {
       zone UKSouth {
       instanceOf NHSWebsite.azureAISearch
       instanceOf NHSWebsite.azureCMSContentDB
+      instanceOf NHSWebsite.azureProfilesDB
       }
     }
   }
