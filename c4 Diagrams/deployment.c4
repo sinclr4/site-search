@@ -27,6 +27,7 @@ deployment {
         instanceOf NHSWebsite.function
         instanceOf NHSWebsite.azureServiceBus
         instanceOf NHSWebsite.azureContentDB
+      
       }
     }
   }

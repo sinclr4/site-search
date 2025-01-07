@@ -1,23 +1,7 @@
-specification {
-  element actor
-  element system
-  element component
-  element database
-  element queue
-  element restapi
-  element cloud
-  element service
 
-}
 
 model {
-  citizen = actor 'Citizen' {
-    description 'A visitor to the NHS Website'
-    style {
-      shape person
-    }
-
-  }
+  
   analyticsUser = actor 'Analytics/Content User' {
 
     description 'Specialist user of search solution'
@@ -26,9 +10,9 @@ model {
       shape person
     }
   }
-
-  NHSWebsite = system 'NHS Website' {
-    component ui 'Frontend for Site Search' {
+  extend NHSWebsite  {
+ 
+    component site-search-ui 'Frontend for Site Search' {
       description '.Net Core application, hosted as App Service Plan'
       style {
         shape browser
@@ -101,12 +85,12 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> ui 'opens in browser'
+  citizen -> site-search-ui 'opens in browser'
   citizen -> NHSWebsite 'searches for health information'
   analyticsUser -> NHSWebsite 'Updates search solution'
 
   //Implementation
-  ui -> api 'fetches via HTTPS'
+  site-search-ui -> api 'fetches via HTTPS'
   api -> azureSearch 'fetches via HTTPS'
   api -> azureServiceBus 'Puts messages'
   azureServiceBus -> function 'Processes Messages'
@@ -118,21 +102,18 @@ model {
 }
 
 views {
-  view index {
-    title 'Starting View'
-    description 'NHS.UK Site Search'
-
-    include *
-    autoLayout LeftRight
-  }
-  view of NHSWebsite {
+  view of site-search-ui {
     title 'Implementation of Site Search'
     description 'Technical overview'
-    include *
+    include *,
+      site-search-ui,
+      site-search-ui.*
+
 
     style citizen {
       color muted
     }
     autoLayout LeftRight
   }
+
 }

@@ -1,0 +1,46 @@
+specification {
+  element actor
+  element system
+  element component
+  element database
+  element queue
+  element restapi
+  element cloud
+  element service
+
+}
+model {
+ 
+ NHSWebsite = system 'NHS Website' {
+ }
+
+
+
+    citizen = actor 'Citizen' {
+    description 'A visitor to the NHS Website'
+    style {
+      shape person
+    }
+
+  }
+}
+views { 
+  view index {
+    title 'Starting View'
+    description 'NHS.UK Site Search'
+
+    include *
+    autoLayout LeftRight
+  }
+    view of NHSWebsite {
+    title 'Implementation of Site Search'
+    description 'Technical overview'
+    include *
+
+    style citizen {
+      color muted
+    }
+    autoLayout LeftRight
+  }
+
+}
