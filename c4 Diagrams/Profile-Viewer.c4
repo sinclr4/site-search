@@ -55,18 +55,6 @@ views {
     }
     autoLayout LeftRight
   }
-   deployment view profile-viewer {
-    title 'Production Deployment of Profile Viewer'
-    description 'Deployment of NHS.UK Profile Viewer'
 
-    include
-      *,
-      prod.uk.profile-viewer.**
-
-    style uk._ {
-      color blue
-    }
-   
-	}
 
 }

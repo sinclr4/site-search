@@ -98,18 +98,6 @@ views {
     }
     autoLayout LeftRight
   }
-   deployment view profile-editor {
-    title 'Production Deployment of Profile Editor'
-    description 'Deployment of NHS.UK Profile Ediot'
 
-    include
-      *,
-      prod.uk.profile-editor.**
-
-    style uk._ {
-      color blue
-    }
-   
-	}
 
 }
