@@ -1,5 +1,6 @@
-
-
+specification {
+  
+}
 model {
    
     profile-editor = actor 'Profile Editor' {
@@ -52,8 +53,8 @@ model {
   }
 
   // Customer uses the UI
-  profile-editor -> profile-editor-ui 'opens in browser'
-  //profile-editor -> NHSWebsite 'Owns an organisation profile'
+ profile-editor -> profile-editor-ui 'Owns an organisation profile'
+
 
   //Implementation
 NHSWebsite.profile-editor-ui -> editor-authentication 'Authenticates a user'
@@ -71,11 +72,12 @@ deployment {
 
   environment prod 'Production' {
     uk = zone 'UK South' {
-      zone profile-editor {
+      zone profile-editing {
         instanceOf NHSWebsite.azureDataFactoryProfiles
         instanceOf NHSWebsite.ProfileEditor-API
         instanceOf NHSWebsite.editor-authentication
         instanceOf NHSWebsite.azureServiceBusUEC
+        instanceOf NHSWebsite.profile-editor-ui
    
        
       }
@@ -89,7 +91,7 @@ views {
     description 'Technical overview'
   
     include *,
-    NHSWebsite.profile-editor-ui
+ //   NHSWebsite.profile-editor-ui
  
 
 
