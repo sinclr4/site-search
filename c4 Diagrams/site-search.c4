@@ -50,13 +50,7 @@ model {
       }
     }
 
-    azureCMSContentDB = component 'Wagtail Content Database' {
-      description 'Database user to run the CMS'
-      style {
-        shape storage
-        icon azure:azure-database-postgre-sql-server
-      }
-    }
+   
 
     azureAnalyticsDB = component 'Analytics Database' {
       description 'Store of search results and model results'
@@ -97,7 +91,7 @@ model {
   function -> azureAnalyticsDB 'Stores Analytics'
   azureDataFactory -> azureContentDB 'Extracts Content from Content DB'
   azureContentDB -> azureSearch 'Indexes Data'
-  azureCMSContentDB -> azureDataFactory 'Source of content'
+  NHSWebsite.azureCMSContentDB -> azureDataFactory 'Source of content'
   api -> azureAnalyticsDB 'Retrieves model responses'
 }
 

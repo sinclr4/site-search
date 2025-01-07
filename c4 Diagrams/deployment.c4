@@ -20,6 +20,7 @@ deployment {
     eu = zone 'UK South' {
       zone UKSouth {
       instanceOf NHSWebsite.azureAISearch
+      instanceOf NHSWebsite.azureCMSContentDB
       }
     }
   }
