@@ -84,7 +84,7 @@ model {
       }
     }
 
-    component api 'Search APIs' {
+    restapi api 'Search APIs' {
       description '
         Implements business logic and exposes as REST API
         Implements type ahead for search box'
