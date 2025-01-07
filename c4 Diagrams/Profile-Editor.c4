@@ -1,9 +1,7 @@
 
 
 model {
-  
-  extend NHSWebsite  {
- 
+   
     profile-editor = actor 'Profile Editor' {
     description 'An editor for a profile on the NHS Website'
     style {
@@ -11,6 +9,8 @@ model {
     }
 
   }
+  extend NHSWebsite  {
+
 
     component profile-editor-ui 'Frontend for Profile Editing' {
       description '.Net Core application, hosted as App Service Plan'
@@ -58,6 +58,7 @@ model {
   //Implementation
 NHSWebsite.profile-editor-ui -> editor-authentication 'Authenticates a user'
 NHSWebsite.ProfileEditor-API -> editor-authentication 'Authenticates a user'
+NHSWebsite.ProfileEditor-API -> azureServiceBusUEC 'Post message to UEC'
   NHSWebsite.azureProfilesDB -> NHSWebsite.azureAISearch 'Profiles information loaded into Azure Search Index'
   azureDataFactoryProfiles -> NHSWebsite.azureProfilesDB 'Extracts Profiles from NHSUKChoice and PIMS'
   NHSWebsite.profile-editor-ui -> NHSWebsite.ProfileEditor-API 'Accepts updates to a profile'
@@ -74,6 +75,7 @@ deployment {
         instanceOf NHSWebsite.azureDataFactoryProfiles
         instanceOf NHSWebsite.ProfileEditor-API
         instanceOf NHSWebsite.editor-authentication
+        instanceOf NHSWebsite.azureServiceBusUEC
    
        
       }
@@ -86,7 +88,8 @@ views {
     title 'Implementation of Profile Editor'
     description 'Technical overview'
   
-    include *
+    include *,
+    NHSWebsite.profile-editor-ui
  
 
 
