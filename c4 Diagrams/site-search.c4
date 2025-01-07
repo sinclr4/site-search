@@ -13,8 +13,6 @@ specification {
 model {
   citizen = actor 'Citizen' {
     description 'A visitor to the NHS Website'
-    description 'nhs.uk Website User'
-
     style {
       shape person
     }
@@ -54,7 +52,7 @@ model {
     }
 
     service azureDataFactory 'Data Factory' {
-      description 'Azure Data Factory'
+    
       style {
         icon azure:data-factories
       }
@@ -62,6 +60,7 @@ model {
     }
 
     azureContentDB = component 'Content Database' {
+        description 'Copy of content ready to index'
       style {
         shape storage
         icon azure:azure-sql
@@ -69,6 +68,7 @@ model {
     }
 
     azureCMSContentDB = component 'Wagtail Content Database' {
+        description 'Database user to run the CMS'
       style {
         shape storage
         icon azure:azure-database-postgre-sql-server
@@ -76,6 +76,8 @@ model {
     }
 
     azureAnalyticsDB = component 'Analytics Database' {
+        description 'Store of search results and model results'
+ 
       style {
         shape storage
         icon azure:azure-sql
@@ -85,7 +87,7 @@ model {
     component api 'Search APIs' {
       description '
         Implements business logic and exposes as REST API
-        Implements type ahead for search box      '
+        Implements type ahead for search box'
       style {
         icon azure:function-apps
       }
