@@ -12,9 +12,14 @@ specification {
 model {
  
  NHSWebsite = system 'NHS Website' {
+
+ service azureAISearch 'Azure Search' {
+      description 'Azure Search Index of NHS Services and Postcodes'
+     icon azure:cognitive-search
+    }
+      
  }
-
-
+   
 
     citizen = actor 'Citizen' {
     description 'A visitor to the NHS Website'
@@ -26,15 +31,19 @@ model {
 }
 views { 
   view index {
-    title 'Starting View'
-    description 'NHS.UK Site Search'
+    title 'Index View for NHS Website'
+    description 'A model showing the NHS Website'
 
     include *
+    
     autoLayout LeftRight
+    style azureAISearch {
+      shape storage
+    }
   }
     view of NHSWebsite {
-    title 'Implementation of Site Search'
-    description 'Technical overview'
+    title 'Implementation of NHS Website'
+    description 'Technical overview of all components'
     include *
 
     style citizen {

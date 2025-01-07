@@ -13,10 +13,7 @@ model {
         shape browser
       }
     }
-       service azureAISearch 'Azure Search' {
-      description 'Azure Search Index of NHS Services and Postcodes'
-     icon azure:cognitive-search
-    }
+
   }
 
   // Customer uses the UI
@@ -25,8 +22,24 @@ model {
 
 
   //Implementation
-find-a-service-ui -> azureAISearch 'Searches for NHS Services'
+find-a-service-ui -> NHSWebsite.azureAISearch 'Searches for NHS Services'
 
+}
+
+// Deployment model
+deployment {
+
+
+
+  environment prod 'Production' {
+    eu = zone 'UK South' {
+      zone UKSouth {
+
+        instanceOf NHSWebsite.find-a-service-ui
+      
+      }
+    }
+  }
 }
 
 
@@ -35,7 +48,9 @@ views {
   view of find-a-service-ui {
     title 'Implementation of Find a Service'
     description 'Technical overview'
-    include *
+    include *,
+    find-a-service-ui,
+    find-a-service-ui.*
 
     style citizen {
       color muted

@@ -21,13 +21,13 @@ model {
     //Components that make up the NHS Website
     service azureSearch 'Azure Search' {
       description '
-       Azure Search Index
+       Azure Site Search Index
       '
       icon azure:cognitive-search
     }
 
     service azureServiceBus 'Azure Service Bus' {
-      description 'Azure Service Bus for all incoming messages'
+      description 'Azure Service Bus for all incoming search messages'
       style {
         icon azure:azure-service-bus
         shape queue
@@ -67,7 +67,7 @@ model {
       }
     }
 
-    restapi api 'Search APIs' {
+    component api 'Search APIs' {
       description '
         Implements business logic and exposes as REST API
         Implements type ahead for search box'
@@ -76,7 +76,7 @@ model {
       }
     }
 
-    component function 'Messaging Functions' {
+    restapi function 'Messaging Functions' {
       description 'Processes messages from service bus'
       style {
         icon azure:function-apps
@@ -101,13 +101,31 @@ model {
   api -> azureAnalyticsDB 'Retrieves model responses'
 }
 
+deployment {
+
+  environment prod 'Production' {
+    eu = zone 'UK South' {
+      zone UKSouth {
+        instanceOf NHSWebsite.site-search-ui
+        instanceOf NHSWebsite.api
+        instanceOf NHSWebsite.azureAnalyticsDB
+        instanceOf NHSWebsite.azureSearch
+        instanceOf NHSWebsite.azureDataFactory
+        instanceOf NHSWebsite.function
+        instanceOf NHSWebsite.azureServiceBus
+        instanceOf NHSWebsite.azureContentDB
+      }
+    }
+  }
+}
+
 views {
   view of site-search-ui {
     title 'Implementation of Site Search'
     description 'Technical overview'
-    include *,
-      site-search-ui,
-      site-search-ui.*
+  
+    include *
+ 
 
 
     style citizen {
