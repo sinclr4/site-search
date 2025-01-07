@@ -118,7 +118,6 @@ model {
 }
 
 views {
-
   view index {
     title 'Starting View'
     description 'NHS.UK Site Search'
