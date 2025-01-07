@@ -17,7 +17,7 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> profile-viewer-ui 'opens in browser'
+  citizen -> profile-viewer-ui 'User viewing organisation profile'
   citizen -> NHSWebsite 'searches for health organisation profiles'
 
   //Implementation

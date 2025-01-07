@@ -17,7 +17,7 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> find-a-service-ui 'opens in browser'
+  citizen -> find-a-service-ui 'User searching for NHS Services'
   //citizen -> NHSWebsite 'searches for health locations information'
 
 

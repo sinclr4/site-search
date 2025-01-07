@@ -36,7 +36,7 @@ model {
   }
 
   // Customer uses the UI
-  citizen -> nhswebsite-ui 'opens in browser'
+  citizen -> nhswebsite-ui 'User viewing health related content'
   contentEditor -> nhswebsite-admin-ui 'Editor for Content Management'
   citizen -> nhswebsite-content-api 'Any user wishing to consume our content via an API'
  
