@@ -32,8 +32,8 @@ deployment {
 
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
-      zone UKSouth {
+    uk = zone 'UK South' {
+      zone find-a-service {
 
         instanceOf NHSWebsite.find-a-service-ui
       
@@ -57,4 +57,17 @@ views {
     }
     autoLayout LeftRight
   }
+   deployment view find-a-service {
+    title 'Production Deployment of Find a Service'
+    description 'Deployment of NHS.UK Find a Service'
+
+    include
+      *,
+      prod.uk.find-a-service.**
+
+    style uk._ {
+      color blue
+    }
+   
+	}
 }

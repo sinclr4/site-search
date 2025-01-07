@@ -98,8 +98,8 @@ model {
 deployment {
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
-      zone UKSouth {
+    uk = zone 'UK South' {
+      zone site-search {
         instanceOf NHSWebsite.site-search-ui
         instanceOf NHSWebsite.api
         instanceOf NHSWebsite.azureAnalyticsDB
@@ -127,5 +127,18 @@ views {
     }
     autoLayout LeftRight
   }
+   deployment view site-search {
+    title 'Production Deployment of Site Search'
+    description 'Deployment of NHS.UK'
+
+    include
+      *,
+      prod.uk.site-search.**
+
+    style uk._ {
+      color blue
+    }
+   
+	}
 
 }

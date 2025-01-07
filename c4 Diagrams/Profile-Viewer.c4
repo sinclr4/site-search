@@ -31,8 +31,8 @@ model {
 deployment {
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
-      zone UKSouth {
+    uk = zone 'UK South' {
+      zone profile-viewer {
         instanceOf NHSWebsite.profile-viewer-ui
    
        
@@ -55,5 +55,18 @@ views {
     }
     autoLayout LeftRight
   }
+   deployment view profile-viewer {
+    title 'Production Deployment of Profile Viewer'
+    description 'Deployment of NHS.UK Profile Viewer'
+
+    include
+      *,
+      prod.uk.profile-viewer.**
+
+    style uk._ {
+      color blue
+    }
+   
+	}
 
 }

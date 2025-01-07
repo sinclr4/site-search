@@ -70,8 +70,8 @@ NHSWebsite.ProfileEditor-API -> azureServiceBusUEC 'Post message to UEC'
 deployment {
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
-      zone UKSouth {
+    uk = zone 'UK South' {
+      zone profile-editor {
         instanceOf NHSWebsite.azureDataFactoryProfiles
         instanceOf NHSWebsite.ProfileEditor-API
         instanceOf NHSWebsite.editor-authentication
@@ -98,5 +98,18 @@ views {
     }
     autoLayout LeftRight
   }
+   deployment view profile-editor {
+    title 'Production Deployment of Profile Editor'
+    description 'Deployment of NHS.UK Profile Ediot'
+
+    include
+      *,
+      prod.uk.profile-editor.**
+
+    style uk._ {
+      color blue
+    }
+   
+	}
 
 }

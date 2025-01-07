@@ -55,8 +55,8 @@ deployment {
 
 
   environment prod 'Production' {
-    eu = zone 'UK South' {
-      zone UKSouth {
+    uk = zone 'UK South' {
+      zone wagtail-cms {
 
         instanceOf NHSWebsite.nhswebsite-ui
         instanceOf NHSWebsite.nhswebsite-admin-ui
@@ -92,4 +92,17 @@ views {
     }
     autoLayout LeftRight
   }
+   deployment view wagtail {
+    title 'Production Deployment of Wagtail'
+    description 'Deployment of NHS.UK CMS'
+
+    include
+      *,
+      prod.uk.wagtail-cms.**
+
+    style uk._ {
+      color blue
+    }
+   
+	}
 }
