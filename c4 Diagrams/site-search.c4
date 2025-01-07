@@ -18,14 +18,13 @@ model {
     }
 
   }
-    analyticsUser = actor 'Analytics/Content User' {
-   
+  analyticsUser = actor 'Analytics/Content User' {
+
     description 'Specialist user of search solution'
 
     style {
       shape person
     }
-
   }
 
   NHSWebsite = system 'NHS Website' {
@@ -52,7 +51,7 @@ model {
     }
 
     service azureDataFactory 'Data Factory' {
-    
+
       style {
         icon azure:data-factories
       }
@@ -60,7 +59,7 @@ model {
     }
 
     azureContentDB = component 'Content Database' {
-        description 'Copy of content ready to index'
+      description 'Copy of content ready to index'
       style {
         shape storage
         icon azure:azure-sql
@@ -68,7 +67,7 @@ model {
     }
 
     azureCMSContentDB = component 'Wagtail Content Database' {
-        description 'Database user to run the CMS'
+      description 'Database user to run the CMS'
       style {
         shape storage
         icon azure:azure-database-postgre-sql-server
@@ -76,8 +75,8 @@ model {
     }
 
     azureAnalyticsDB = component 'Analytics Database' {
-        description 'Store of search results and model results'
- 
+      description 'Store of search results and model results'
+
       style {
         shape storage
         icon azure:azure-sql
@@ -118,10 +117,6 @@ model {
   api -> azureAnalyticsDB 'Retrieves model responses'
 }
 
-
-
-
-
 views {
 
   view index {
@@ -129,21 +124,16 @@ views {
     description 'NHS.UK Site Search'
 
     include *
-  	autoLayout LeftRight
-	}
-
+    autoLayout LeftRight
+  }
   view of NHSWebsite {
     title 'Implementation of Site Search'
     description 'Technical overview'
-
-
     include *
 
     style citizen {
       color muted
     }
     autoLayout LeftRight
-
   }
-
 }
